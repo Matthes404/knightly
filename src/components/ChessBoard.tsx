@@ -46,11 +46,11 @@ const Square: React.FC<{
   
   return (
     <div
-      className={`w-16 h-16 flex items-center justify-center cursor-pointer text-4xl select-none transition-colors ${bgColor} ${textColor} hover:opacity-80 border-0`}
+      className={`w-20 h-20 flex items-center justify-center cursor-pointer text-5xl select-none transition-colors ${bgColor} ${textColor} hover:opacity-80 border-0`}
       onClick={onClick}
     >
       {isValidMove && !piece && (
-        <div className="w-6 h-6 bg-current opacity-50 rounded-full"></div>
+        <div className="w-8 h-8 bg-current opacity-50 rounded-full"></div>
       )}
       {pieceSymbol}
     </div>
@@ -108,20 +108,20 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ gameState, onMove }) => 
     <div className="inline-block">
       {/* Top file labels */}
       <div className="flex">
-        <div className="w-8"></div> {/* Empty corner */}
+        <div className="w-10"></div> {/* Empty corner */}
         {files.map(file => (
-          <div key={file} className="w-16 h-8 flex items-center justify-center text-sm font-medium text-gray-600">
+          <div key={file} className="w-20 h-10 flex items-center justify-center text-base font-medium text-gray-600">
             {file}
           </div>
         ))}
-        <div className="w-8"></div> {/* Empty corner */}
+        <div className="w-10"></div> {/* Empty corner */}
       </div>
       
       <div className="flex">
         {/* Left rank labels */}
-        <div className="w-8 flex flex-col">
+        <div className="w-10 flex flex-col">
           {ranks.map(rank => (
-            <div key={rank} className="w-8 h-16 flex items-center justify-center text-sm font-medium text-gray-600">
+            <div key={rank} className="w-10 h-20 flex items-center justify-center text-base font-medium text-gray-600">
               {rank}
             </div>
           ))}
@@ -154,9 +154,9 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ gameState, onMove }) => 
         </div>
         
         {/* Right rank labels */}
-        <div className="w-8 flex flex-col">
+        <div className="w-10 flex flex-col">
           {ranks.map(rank => (
-            <div key={rank} className="w-8 h-16 flex items-center justify-center text-sm font-medium text-gray-600">
+            <div key={rank} className="w-10 h-20 flex items-center justify-center text-base font-medium text-gray-600">
               {rank}
             </div>
           ))}
@@ -165,13 +165,13 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ gameState, onMove }) => 
       
       {/* Bottom file labels */}
       <div className="flex">
-        <div className="w-8"></div> {/* Empty corner */}
+        <div className="w-10"></div> {/* Empty corner */}
         {files.map(file => (
-          <div key={file} className="w-16 h-8 flex items-center justify-center text-sm font-medium text-gray-600">
+          <div key={file} className="w-20 h-10 flex items-center justify-center text-base font-medium text-gray-600">
             {file}
           </div>
         ))}
-        <div className="w-8"></div> {/* Empty corner */}
+        <div className="w-10"></div> {/* Empty corner */}
       </div>
     </div>
   );

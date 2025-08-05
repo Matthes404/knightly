@@ -3,18 +3,18 @@ import type { Board, Piece, Position, Move, GameState, PieceColor, PieceType } f
 export const createInitialBoard = (): Board => {
   const board: Board = Array(8).fill(null).map(() => Array(8).fill(null));
   
-  // Place pawns
+  // Place pawns - white at row 1, black at row 6
   for (let col = 0; col < 8; col++) {
-    board[1][col] = { type: 'pawn', color: 'black' };
-    board[6][col] = { type: 'pawn', color: 'white' };
+    board[1][col] = { type: 'pawn', color: 'white' };
+    board[6][col] = { type: 'pawn', color: 'black' };
   }
   
-  // Place other pieces
+  // Place other pieces - white at row 0, black at row 7
   const pieceOrder: PieceType[] = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
   
   for (let col = 0; col < 8; col++) {
-    board[0][col] = { type: pieceOrder[col], color: 'black' };
-    board[7][col] = { type: pieceOrder[col], color: 'white' };
+    board[0][col] = { type: pieceOrder[col], color: 'white' };
+    board[7][col] = { type: pieceOrder[col], color: 'black' };
   }
   
   return board;
@@ -113,8 +113,8 @@ export const getPossibleMoves = (board: Board, from: Position, piece: Piece): Mo
 
 const getPawnMoves = (board: Board, from: Position, piece: Piece): Move[] => {
   const moves: Move[] = [];
-  const direction = piece.color === 'white' ? -1 : 1;
-  const startRow = piece.color === 'white' ? 6 : 1;
+  const direction = piece.color === 'white' ? 1 : -1;
+  const startRow = piece.color === 'white' ? 1 : 6;
   
   // Forward move
   const oneStep = { row: from.row + direction, col: from.col };
