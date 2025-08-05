@@ -31,20 +31,27 @@ const Square: React.FC<{
 }> = ({ piece, position, isSelected, isValidMove, onClick }) => {
   const isLight = (position.row + position.col) % 2 === 0;
   
-  let bgColor = isLight ? 'bg-amber-100' : 'bg-amber-800';
+  let bgColor = isLight ? 'bg-stone-200' : 'bg-stone-700';
+  let textColor = 'text-gray-800';
+  
   if (isSelected) {
     bgColor = 'bg-yellow-400';
+    textColor = 'text-gray-900';
   } else if (isValidMove) {
-    bgColor = isLight ? 'bg-green-200' : 'bg-green-600';
+    bgColor = isLight ? 'bg-green-300' : 'bg-green-600';
+    textColor = isLight ? 'text-gray-900' : 'text-white';
   }
   
   const pieceSymbol = piece ? PIECE_SYMBOLS[`${piece.color}-${piece.type}`] : '';
   
   return (
     <div
-      className={`w-16 h-16 flex items-center justify-center cursor-pointer text-4xl select-none ${bgColor} hover:opacity-80`}
+      className={`w-16 h-16 flex items-center justify-center cursor-pointer text-4xl select-none transition-colors ${bgColor} ${textColor} hover:opacity-80 border-0`}
       onClick={onClick}
     >
+      {isValidMove && !piece && (
+        <div className="w-6 h-6 bg-current opacity-50 rounded-full"></div>
+      )}
       {pieceSymbol}
     </div>
   );
@@ -94,30 +101,78 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({ gameState, onMove }) => 
     }
   };
   
+  const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  const ranks = ['8', '7', '6', '5', '4', '3', '2', '1'];
+
   return (
-    <div className="inline-block border-2 border-gray-800">
-      {gameState.board.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex">
-          {row.map((piece, colIndex) => {
-            const position = { row: rowIndex, col: colIndex };
-            const isSelected = selectedSquare?.row === rowIndex && selectedSquare?.col === colIndex;
-            const isValidMoveTarget = validMoves.some(
-              move => move.row === rowIndex && move.col === colIndex
-            );
-            
-            return (
-              <Square
-                key={`${rowIndex}-${colIndex}`}
-                piece={piece}
-                position={position}
-                isSelected={isSelected}
-                isValidMove={isValidMoveTarget}
-                onClick={() => handleSquareClick(position)}
-              />
-            );
-          })}
+    <div className="inline-block">
+      {/* Top file labels */}
+      <div className="flex">
+        <div className="w-8"></div> {/* Empty corner */}
+        {files.map(file => (
+          <div key={file} className="w-16 h-8 flex items-center justify-center text-sm font-medium text-gray-600">
+            {file}
+          </div>
+        ))}
+        <div className="w-8"></div> {/* Empty corner */}
+      </div>
+      
+      <div className="flex">
+        {/* Left rank labels */}
+        <div className="w-8 flex flex-col">
+          {ranks.map(rank => (
+            <div key={rank} className="w-8 h-16 flex items-center justify-center text-sm font-medium text-gray-600">
+              {rank}
+            </div>
+          ))}
         </div>
-      ))}
+        
+        {/* Chess board */}
+        <div className="border-2 border-gray-800">
+          {gameState.board.map((row, rowIndex) => (
+            <div key={rowIndex} className="flex">
+              {row.map((piece, colIndex) => {
+                const position = { row: rowIndex, col: colIndex };
+                const isSelected = selectedSquare?.row === rowIndex && selectedSquare?.col === colIndex;
+                const isValidMoveTarget = validMoves.some(
+                  move => move.row === rowIndex && move.col === colIndex
+                );
+                
+                return (
+                  <Square
+                    key={`${rowIndex}-${colIndex}`}
+                    piece={piece}
+                    position={position}
+                    isSelected={isSelected}
+                    isValidMove={isValidMoveTarget}
+                    onClick={() => handleSquareClick(position)}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
+        
+        {/* Right rank labels */}
+        <div className="w-8 flex flex-col">
+          {ranks.map(rank => (
+            <div key={rank} className="w-8 h-16 flex items-center justify-center text-sm font-medium text-gray-600">
+              {rank}
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Bottom file labels */}
+      <div className="flex">
+        <div className="w-8"></div> {/* Empty corner */}
+        {files.map(file => (
+          <div key={file} className="w-16 h-8 flex items-center justify-center text-sm font-medium text-gray-600">
+            {file}
+          </div>
+        ))}
+        <div className="w-8"></div> {/* Empty corner */}
+      </div>
     </div>
   );
 };
